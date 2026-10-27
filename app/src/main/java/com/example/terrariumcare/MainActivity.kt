@@ -26,9 +26,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             TerrariumCareTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Title(
+                    TerrariumTitle(
                         name = "TerrariumCare",
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
@@ -37,17 +37,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Title(name: String, modifier: Modifier = Modifier) {
+fun TerrariumTitle(name: String, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = name,
             fontSize = 36.sp,
             color = Color.Cyan,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -56,6 +56,6 @@ fun Title(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     TerrariumCareTheme {
-        Title("Android")
+        TerrariumTitle("Android")
     }
 }
