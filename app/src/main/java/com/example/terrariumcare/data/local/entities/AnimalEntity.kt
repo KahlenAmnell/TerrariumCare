@@ -24,6 +24,18 @@ data class AnimalEntity(
     val terrariumId: Long,
     val name: String,
     val species: String,
-    val birthDate: LocalDate,
-    val currentWeightGrams: Double
+    val scientificName: String,
+    val birthDate: String,
+    val sex: String,
+    val currentWeight: Double,
+    val joinedDate: String,
+    val notes: String? = null,
+    val photoUri: String? = null,
+
+    val baskingTemp: Double,
+    val warmSideTemp: Double,
+    val coolSideTemp: Double,
+    val nightTemp: Double,
+    val minHumidity: Int,
+    val maxHumidity: Int
 )
