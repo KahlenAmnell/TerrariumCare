@@ -7,29 +7,22 @@ import androidx.room.PrimaryKey
 import com.example.terrariumcare.data.local.enums.CareEventType
 import com.example.terrariumcare.data.local.enums.EntryType
 
-@Entity(
-    tableName = "log_entries",
-    foreignKeys = [
-        ForeignKey(
-            entity = AnimalEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["animalId"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ],
-    indices = [Index("animalId")]
-)
+@Entity(tableName = "log_entries")
 data class LogEntryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    val animalId: Long,
-    val timestamp: Long,
-    val entryType: EntryType,
+    val parentId: Long,
+    val parentType: String,
+    val eventType: String,
+    val date: String,
+    val time: String,
 
-    val baskingTemp: Double? = null,
-    val coolTemp: Double? = null,
-    val humidity: Int? = null,
+    val foodType: String? = null,
+    val amountOffered: Double? = null,
+    val appetite: String? = null,
+    val notes: String? = null,
+    val reminderEnabled: Boolean = false,
 
-    val careEventType: CareEventType? = null,
-    val description: String? = null
+    val measuredTemperature: Double? = null,
+    val measuredHumidity: Int? = null
 )
