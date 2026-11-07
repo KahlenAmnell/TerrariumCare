@@ -8,7 +8,10 @@ data class TerrariumEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
     val name: String,
-    val dimensions: String,
-    val targetTemperature: Double,
-    val targetHumidity: Int
+    val habitatType: String,
+    val location: String,
+    val width: Int,
+    val depth: Int,
+    val height: Int,
+    val photoUri: String? = null
 )

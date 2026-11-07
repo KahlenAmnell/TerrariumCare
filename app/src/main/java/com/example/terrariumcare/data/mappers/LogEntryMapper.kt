@@ -6,28 +6,51 @@ import com.example.terrariumcare.data.local.enums.EntryType
 import com.example.terrariumcare.domain.model.LogEntry
 
 fun LogEntryEntity.toDomainModel(): LogEntry {
-    return when (entryType) {
-        EntryType.ENVIRONMENT -> LogEntry.Environment(
+    return when (eventType) {
+        EntryType.ENVIRONMENT.name -> LogEntry.Environment(
             id = id,
-            animalId = animalId,
-            timestamp = timestamp,
-            baskingTemp = baskingTemp,
-            coolTemp = coolTemp,
-            humidity = humidity
+            animalId = parentId,
+            timestamp = 0L,
+            baskingTemp = measuredTemperature,
+            coolTemp = null,
+            humidity = measuredHumidity
         )
-        EntryType.CARE -> LogEntry.Care(
+        EntryType.CARE.name -> LogEntry.Care(
             id = id,
-            animalId = animalId,
-            timestamp = timestamp,
-            eventType = careEventType ?: CareEventType.OTHER,
-            description = description
+            animalId = parentId,
+            timestamp = 0L,
+            eventType = CareEventType.OTHER,
+            description = notes
         )
-        EntryType.NOTE -> LogEntry.Note(
+        EntryType.NOTE.name -> LogEntry.Note(
             id = id,
-            animalId = animalId,
-            timestamp = timestamp,
-            description = description ?: ""
+            animalId = parentId,
+            timestamp = 0L,
+            description = notes ?: ""
         )
+        else -> {
+            val careEvent = try {
+                CareEventType.valueOf(eventType)
+            } catch (e: Exception) {
+                null
+            }
+            if (careEvent != null) {
+                LogEntry.Care(
+                    id = id,
+                    animalId = parentId,
+                    timestamp = 0L,
+                    eventType = careEvent,
+                    description = notes
+                )
+            } else {
+                LogEntry.Note(
+                    id = id,
+                    animalId = parentId,
+                    timestamp = 0L,
+                    description = notes ?: ""
+                )
+            }
+        }
     }
 }
 
@@ -35,27 +58,31 @@ fun LogEntry.toEntity(): LogEntryEntity {
     return when (this) {
         is LogEntry.Environment -> LogEntryEntity(
             id = id,
-            animalId = animalId,
-            timestamp = timestamp,
-            entryType = EntryType.ENVIRONMENT,
-            baskingTemp = baskingTemp,
-            coolTemp = coolTemp,
-            humidity = humidity
+            parentId = animalId,
+            parentType = "ANIMAL",
+            eventType = EntryType.ENVIRONMENT.name,
+            date = "",
+            time = "",
+            measuredTemperature = baskingTemp,
+            measuredHumidity = humidity
         )
         is LogEntry.Care -> LogEntryEntity(
             id = id,
-            animalId = animalId,
-            timestamp = timestamp,
-            entryType = EntryType.CARE,
-            careEventType = eventType,
-            description = description
+            parentId = animalId,
+            parentType = "ANIMAL",
+            eventType = eventType.name,
+            date = "",
+            time = "",
+            notes = description
         )
         is LogEntry.Note -> LogEntryEntity(
             id = id,
-            animalId = animalId,
-            timestamp = timestamp,
-            entryType = EntryType.NOTE,
-            description = description
+            parentId = animalId,
+            parentType = "ANIMAL",
+            eventType = EntryType.NOTE.name,
+            date = "",
+            time = "",
+            notes = description
         )
     }
 }
