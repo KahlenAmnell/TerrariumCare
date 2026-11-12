@@ -3,8 +3,9 @@ package com.example.terrariumcare.data.repository
 import com.example.terrariumcare.data.local.dao.TerrariumDao
 import com.example.terrariumcare.data.local.entities.TerrariumEntity
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class TerrariumRepository(
+class TerrariumRepository @Inject constructor(
     private val terrariumDao: TerrariumDao
 ) {
     val allTerrariums: Flow<List<TerrariumEntity>> = terrariumDao.getAllTerrariums()
