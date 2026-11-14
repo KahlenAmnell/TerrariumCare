@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -62,18 +63,13 @@ fun DashboardContent(
                 color = MaterialTheme.colorScheme.onBackground
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            AppButton(
-                text = "+ Add terrarium",
-                onClick = onNavigateToAddTerrarium
-            )
-
             Spacer(modifier = Modifier.height(20.dp))
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
             ) {
                 items(terrariums) { terrarium ->
                     TerrariumCard(
@@ -87,6 +83,13 @@ fun DashboardContent(
                     )
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            AppButton(
+                text = "+ Add terrarium",
+                onClick = onNavigateToAddTerrarium
+            )
         }
     }
 }
