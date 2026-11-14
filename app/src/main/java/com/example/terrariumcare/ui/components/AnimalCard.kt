@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -67,7 +67,7 @@ fun AnimalCard(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.Default.Face,
+                    imageVector = Icons.Default.Pets,
                     contentDescription = "Zdjęcie zwierzęcia",
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.size(36.dp)
