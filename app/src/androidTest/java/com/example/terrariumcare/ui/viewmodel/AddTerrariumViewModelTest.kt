@@ -1,8 +1,12 @@
 package com.example.terrariumcare.ui.viewmodel
 
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.terrariumcare.data.local.dao.TerrariumDao
 import com.example.terrariumcare.data.local.entities.TerrariumEntity
 import com.example.terrariumcare.data.repository.TerrariumRepository
+import com.example.terrariumcare.utils.ImageStorageManagerImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -19,8 +23,10 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(AndroidJUnit4::class)
 class AddTerrariumViewModelTest {
 
     private val testDispatcher = UnconfinedTestDispatcher()
@@ -31,9 +37,11 @@ class AddTerrariumViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val imageStorageManager = ImageStorageManagerImpl(context)
         fakeDao = FakeTerrariumDaoForViewModel()
         repository = TerrariumRepository(fakeDao)
-        viewModel = AddTerrariumViewModel(repository)
+        viewModel = AddTerrariumViewModel(repository, imageStorageManager)
     }
 
     @After

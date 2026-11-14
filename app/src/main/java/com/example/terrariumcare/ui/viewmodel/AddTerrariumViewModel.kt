@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.terrariumcare.data.local.entities.TerrariumEntity
 import com.example.terrariumcare.data.repository.TerrariumRepository
+import com.example.terrariumcare.utils.ImageStorageManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddTerrariumViewModel @Inject constructor(
-    private val repository: TerrariumRepository
+    private val repository: TerrariumRepository,
+    private val imageStorageManager: ImageStorageManager
 ) : ViewModel() {
 
     val name = MutableStateFlow("")
@@ -67,6 +69,10 @@ class AddTerrariumViewModel @Inject constructor(
         _isError.value = false
 
         viewModelScope.launch {
+            val internalPhotoPath = photoUri.value?.let { rawUri ->
+                imageStorageManager.saveImageToInternalStorage(rawUri) ?: rawUri
+            }
+
             val entity = TerrariumEntity(
                 name = name.value.trim(),
                 habitatType = habitatType.value,
@@ -74,7 +80,7 @@ class AddTerrariumViewModel @Inject constructor(
                 width = width.value.toIntOrNull() ?: 0,
                 depth = depth.value.toIntOrNull() ?: 0,
                 height = height.value.toIntOrNull() ?: 0,
-                photoUri = photoUri.value
+                photoUri = internalPhotoPath
             )
             repository.insertTerrarium(entity)
             onSuccess()

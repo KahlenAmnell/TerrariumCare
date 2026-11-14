@@ -6,6 +6,8 @@ import com.example.terrariumcare.data.local.dao.AnimalDao
 import com.example.terrariumcare.data.local.dao.LogEntryDao
 import com.example.terrariumcare.data.local.dao.TerrariumDao
 import com.example.terrariumcare.data.repository.TerrariumRepository
+import com.example.terrariumcare.utils.ImageStorageManager
+import com.example.terrariumcare.utils.ImageStorageManagerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,4 +47,10 @@ object DatabaseModule {
     fun provideTerrariumRepository(terrariumDao: TerrariumDao): TerrariumRepository {
         return TerrariumRepository(terrariumDao)
     }
+
+    @Provides
+    @Singleton
+    fun provideImageStorageManager(
+        impl: ImageStorageManagerImpl
+    ): ImageStorageManager = impl
 }
