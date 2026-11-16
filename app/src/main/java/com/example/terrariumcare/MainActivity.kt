@@ -3,61 +3,28 @@ package com.example.terrariumcare
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import androidx.activity.viewModels
+import com.example.terrariumcare.ui.screens.MainContainerScreen
 import com.example.terrariumcare.ui.theme.TerrariumCareTheme
+import com.example.terrariumcare.ui.viewmodel.AddTerrariumViewModel
+import com.example.terrariumcare.ui.viewmodel.TerrariumListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val terrariumListViewModel: TerrariumListViewModel by viewModels()
+    private val addTerrariumViewModel: AddTerrariumViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             TerrariumCareTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TerrariumTitle(
-                        name = "TerrariumCare",
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+                MainContainerScreen(
+                    terrariumListViewModel = terrariumListViewModel,
+                    addTerrariumViewModel = addTerrariumViewModel
+                )
             }
         }
-    }
-}
-
-@Composable
-fun TerrariumTitle(name: String, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = name,
-            fontSize = 36.sp,
-            color = Color.Cyan,
-            textAlign = TextAlign.Center,
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TerrariumCareTheme {
-        TerrariumTitle("Android")
     }
 }
